@@ -1,0 +1,122 @@
+version: '2'
+services:
+  master:
+    image: spark_base
+    networks:
+      default:
+        ipv4_address: 192.168.2.10
+    container_name: master
+    volumes:
+      - ./master/hadoop:/opt/hadoop-2.7.4/etc/hadoop:ro
+      - ./master/spark:/opt/spark-2.2.0-bin-hadoop2.7/conf:ro
+      - ./master/ssh:/root/.ssh:ro
+#    command: /etc/init.d/ssh start
+    expose:
+      - 22
+      - 2122
+      - 8030
+      - 8031
+      - 8032
+      - 8033
+      - 8040
+      - 8042
+      - 8080
+      - 8088
+      - 9000 
+      - 19888
+      - 49707
+      - 50010
+      - 50020
+      - 50070 
+      - 50075
+      - 50090
+    ports:
+      - 8088:8088
+
+    tty: true
+
+  slave1:
+    image: spark_base
+    networks:
+      default:
+        ipv4_address: 192.168.2.11
+    container_name: slave1
+    volumes:
+      - ./slave1/hadoop:/opt/hadoop-2.7.4/etc/hadoop:ro
+      - ./slave1/spark:/opt/spark-2.2.0-bin-hadoop2.7/conf:ro
+      - ./slave1/ssh:/root/.ssh:ro
+#    command: /etc/init.d/ssh start
+    expose:
+      - 22
+      - 2122
+      - 8030
+      - 8031
+      - 8032
+      - 8033
+      - 8040
+      - 8042
+      - 8080
+      - 8088
+      - 9000 
+      - 19888
+      - 49707
+      - 50010
+      - 50020
+      - 50070
+      - 50075
+      - 50090
+    tty: true
+
+  slave2:
+    image: spark_base
+    networks:
+      default:
+        ipv4_address: 192.168.2.12
+    container_name: slave2
+    volumes:
+      - ./slave1/hadoop:/opt/hadoop-2.7.4/etc/hadoop:ro
+      - ./slave1/spark:/opt/spark-2.2.0-bin-hadoop2.7/conf:ro
+      - ./slave2/ssh:/root/.ssh:ro
+#    command: /etc/init.d/ssh start
+    expose:
+      - 22
+      - 2122
+      - 8030
+      - 8031
+      - 8032
+      - 8033
+      - 8040
+      - 8042
+      - 8088
+      - 9000 
+      - 19888
+      - 49707
+      - 50010
+      - 50020
+      - 50070
+      - 50075
+      - 50090
+    tty: true
+
+#  mysql:
+#    image: mysql
+#    networks:
+#      default:
+#        ipv4_address: 192.168.2.21
+#    container_name: mysql
+#    volumes:
+#    - /etc/mysql/mysql.conf.d/mysqld.cnf:/etc/mysql/mysql.conf.d/mysqld.cnf
+#    environment:
+#      MYSQL_ROOT_PASSWORD: root
+#      MYSQL_DATABASE: test
+#      MYSQL_USER: root
+#      MYSQL_PASSWORD: roots
+#    expose:
+#      - 3306
+#    ports:
+#      - 3306:3306
+
+networks:
+  default:
+    external:
+      name: sparknet
