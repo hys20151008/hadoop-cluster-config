@@ -9,8 +9,9 @@ services:
     volumes:
       - ./master/hadoop:/opt/hadoop-2.7.4/etc/hadoop:ro
       - ./master/spark:/opt/spark-2.2.0-bin-hadoop2.7/conf:ro
-      - ./master/ssh:/root/.ssh:ro
-#    command: /etc/init.d/ssh start
+      - ./master/ssh:/root/.ssh
+      - ./auto_start.sh:/root/auto_start.sh:rw
+    command: ["/root/auto_start.sh"]
     expose:
       - 22
       - 2122
@@ -44,8 +45,9 @@ services:
     volumes:
       - ./slave1/hadoop:/opt/hadoop-2.7.4/etc/hadoop:ro
       - ./slave1/spark:/opt/spark-2.2.0-bin-hadoop2.7/conf:ro
-      - ./slave1/ssh:/root/.ssh:ro
-#    command: /etc/init.d/ssh start
+      - ./slave1/ssh:/root/.ssh
+      - ./auto_start.sh:/root/auto_start.sh:rw
+    command: ["/root/auto_start.sh"]
     expose:
       - 22
       - 2122
@@ -76,8 +78,9 @@ services:
     volumes:
       - ./slave1/hadoop:/opt/hadoop-2.7.4/etc/hadoop:ro
       - ./slave1/spark:/opt/spark-2.2.0-bin-hadoop2.7/conf:ro
-      - ./slave2/ssh:/root/.ssh:ro
-#    command: /etc/init.d/ssh start
+      - ./slave2/ssh:/root/.ssh
+      - ./auto_start.sh:/root/auto_start.sh:rw
+    command: ["/root/auto_start.sh"]
     expose:
       - 22
       - 2122
